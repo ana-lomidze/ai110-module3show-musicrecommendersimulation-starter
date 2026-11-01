@@ -9,3 +9,15 @@ id,title,artist,genre,mood,energy,tempo_bpm,valence,danceability,acousticness
 8,Night Drive Loop,Neon Echo,synthwave,moody,0.75,110,0.49,0.73,0.22
 9,Focus Flow,LoRoom,lofi,focused,0.40,80,0.59,0.60,0.78
 10,Rooftop Lights,Indigo Parade,indie pop,happy,0.76,124,0.81,0.82,0.35
+11,Concrete Crown,Kid Meridian,hip hop,confident,0.78,96,0.62,0.85,0.12
+12,Nocturne for Rain,Elena Voss,classical,melancholy,0.18,62,0.22,0.20,0.97
+13,Dusty Porchlight,Hollow Creek,country,nostalgic,0.48,104,0.58,0.61,0.82
+14,Island Drift,Sun Tide,reggae,carefree,0.55,82,0.80,0.78,0.45
+15,Ironclad Fury,Black Ember,metal,angry,0.97,172,0.25,0.42,0.04
+16,Velvet Hours,Marisol Lane,r&b,romantic,0.52,88,0.68,0.74,0.30
+17,Strobe Cathedral,Pulse Theory,edm,euphoric,0.95,128,0.88,0.92,0.03
+18,Willow Letters,Juniper & Moth,folk,wistful,0.30,94,0.40,0.45,0.93
+19,Morning Sonata,Clara Whitfield,classical,uplifting,0.45,112,0.85,0.32,0.96
+20,Cloud Chamber,Hazy Lantern,shoegaze,dreamy,0.62,100,0.50,0.40,0.25
+21,Calle Sol,Los Faroles,latin,festive,0.84,98,0.90,0.91,0.27
+22,Parking Lot Anthem,Rusty Halo,punk,rebellious,0.94,168,0.66,0.52,0.08

@@ -22,36 +22,48 @@ Real-world song recommendation platforms like YouTube and Spotify use a combinat
 ### YouTube
 Uses Content-based filtering and collaborative filtering.
 
-**Content-based filtering** describes times by analyszing the content itself. YouTube's system processes signals like audio, visuals, video titles, descriptions, and tags to understand how each video compare to others.
+**Content-based filtering** describes items by analyzing the content itself. YouTube's system processes signals like audio, visuals, video titles, descriptions, and tags to understand how each video compares to others.
 
-**Collaborative filtering** is a technique used in recommendation systems that analyzes user behvior to find commonalities between users. In the context of YouTube, it identifies relationships between videos based on user behvior. So two videos become more similar as more of the same viewers watch them.
+**Collaborative filtering** is a technique used in recommendation systems that analyzes user behavior to find commonalities between users. In the context of YouTube, it identifies relationships between videos based on user behavior. So two videos become more similar as more of the same viewers watch them.
 
 In addition, YouTube models the user as a complex and evolving "vector" built with the following types of data:
 - Long-term watch history: captures a user's historic interests and preference.
-- Short-term sessions behavior: refeclts on the current user behvior and prefernce.
+- Short-term sessions behavior: reflects on the current user behavior and preference.
 - Demographic and environment: adds context based on current device, location, time of day, etc. to the user's profile.
 
 
 ### Spotify
 Combines collaborative filtering, NLP on text about music, and raw audio analysis.
 
-For each song, Spotify colllects two main data types: artisit-provided metadata and raw audio analysis.
+For each song, Spotify collects two main data types: artist-provided metadata and raw audio analysis.
 - Metadata: Tagged onto each song by the artist. Contains information like artist, song title, album, and genre.
-- Raw Audio Analysis: Includes detailed information about the track itself. Things like bpm, loudness, and key. With this information and complex knowlege of music theory, Spotify's algorithm assigns values to every song in three categories: danceability, energy, and valence.
+- Raw Audio Analysis: Includes detailed information about the track itself. Things like bpm, loudness, and key. With this information and complex knowledge of music theory, Spotify's algorithm assigns values to every song in three categories: danceability, energy, and valence.
 
-Along with this kind of data collection and categorization, Spotify uses natural language processing (NLP) modetls to gather information about the music in a more text-based context. For example, analyzing the lyrics or user-created playlist titles.
+Along with this kind of data collection and categorization, Spotify uses natural language processing (NLP) models to gather information about the music in a more text-based context. For example, analyzing the lyrics or user-created playlist titles.
 
-Spotify also uses collaborative filtering. As explained in the YouTube section, this technique involves analzying user behavior and finding commonalities between users.
+Spotify also uses collaborative filtering. As explained in the YouTube section, this technique involves analyzing user behavior and finding commonalities between users.
 
 
-### My Music Recommenation System
+### My Music Recommendation System
 My recommender is **content-based**: it compares each song's attributes to a user's taste profile and ranks songs by how closely they match. It doesn't use other users' behavior, because the dataset has no listening history.
 
 #### Features
 
 **Song** (from `data/songs.csv`): genre, mood, energy, artist, acousticness, valence, danceability, tempo_bpm.
 
-**UserProfile** stores the user's preferences for those same features: favorite genre, favorite mood, target energy, favorite artists, whether they like acoustic music, and optional targets for valence, danceability and tempo.
+**UserProfile** stores the user's preferences for those same features: favorite genres, favorite moods, target energy, favorite artists, target acousticness, and optional targets for valence, danceability and tempo.
+
+Example profile (a chill lofi listener):
+
+​```python
+user_prefs = {
+    "favorite_genres": ["lofi", "jazz"],
+    "favorite_moods": ["chill", "relaxed"],
+    "target_energy": 0.40,
+    "favorite_artists": ["LoRoom"],
+    "target_acousticness": 0.80,
+}
+​```
 
 #### Scoring Rule (one song)
 
@@ -65,22 +77,22 @@ $A$ is the set of features the user gave a preference for. Features without a pr
 
 | Rank | Feature | Weight |
 |---|---|---|
-| 1 | energy | 8 |
-| 2 | genre | 7 |
-| 3 | mood | 6 |
+| 1 | genre | 8 |
+| 2 | mood | 7 |
+| 3 | energy | 6 |
 | 4 | artist | 5 |
 | 5 | acousticness | 4 |
 | 6 | valence | 3 |
 | 7 | danceability | 2 |
 | 8 | tempo_bpm | 1 |
 
-**Categorical features** (genre, mood, artist): similarity is 1 if the song matches the preference, otherwise 0.
+**Categorical features** (genre, mood, artist): the user gives a short list for each (e.g. `favorite_genres`). Similarity is 1 if the song's value is in the list, otherwise 0.
 
 **Numeric features** (energy, acousticness, valence, danceability, tempo): similarity rewards songs that are *close* to the user's target, not songs with higher or lower values:
 
 $$\text{sim}(x, t) = 1 - \frac{|x - t|}{R}$$
 
-$x$ is the song's value, $t$ is the user's target, and $R$ is the largest possible gap. $R = 1$ for the 0–1 features. Tempo is normalized over 60–180 BPM, so $R = 120$. For acousticness, "likes acoustic" sets the target to 1 and otherwise to 0.
+$x$ is the song's value, $t$ is the user's target, and $R$ is the largest possible gap. $R = 1$ for the 0–1 features. Tempo is normalized over 60–180 BPM, so $R = 120$. For acousticness, $t$ is the user's `target_acousticness`.
 
 #### Ranking Rule (list of songs)
 
@@ -93,9 +105,13 @@ The scoring rule says how good one song is for one user. The ranking rule decide
 
 #### Known Limitations
 
-- Genre and mood require exact matches, so near-matches such as "pop" and "indie pop" get no partial credit.
+- Genre and mood still require exact matches against the user's lists, so near-matches outside them, such as "pop" and "indie pop", get no partial credit. Long lists make every song match, so lists should stay short (2–3 items).
 - Energy, tempo and acousticness are correlated in this data, so they partly count the same signal.
 
+#### Potential Biases
+- **Labels dominate.** Genre and mood together make up roughly half of the score (15 of 30 points when five features are active). A song that fits the user's energy and acousticness almost perfectly can still rank low if its genre and mood labels aren't in the user's lists.
+- **The artist bonus favors the familiar.** Favorite-artist matches get a bonus, which works against discovering new artists.
+- **Mood labels are subjective.** Moods like "chill," "relaxed" and "focused" feel close but score as total mismatches unless the user lists all of them.
 
 ---
 
