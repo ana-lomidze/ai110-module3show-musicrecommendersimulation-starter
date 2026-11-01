@@ -151,16 +151,45 @@ You can add more tests in `tests/test_recommender.py`.
 ---
 
 ## Sample Recommendation Output
-
-Paste a sample of your recommender's output here as a text block so a reader can see what it produces:
-
 ```
-# e.g.:
-# User profile: genre=indie, mood=chill, energy=low
-# Recommendations:
-#   1. ...
-#   2. ...
-#   3. ...
+============================================================
+ TOP 5 RECOMMENDATIONS
+ Profile: genres=pop | moods=happy | energy=0.80
+============================================================
+
+#1  Sunrise City - Neon Echo
+    Score: 0.99
+    Why:
+      - genre match: pop (+8)
+      - mood match: happy (+7)
+      - energy 0.82 vs target 0.8 (sim 0.98)
+------------------------------------------------------------
+
+#2  Gym Hero - Max Pulse
+    Score: 0.63
+    Why:
+      - genre match: pop (+8)
+      - energy 0.93 vs target 0.8 (sim 0.87)
+------------------------------------------------------------
+
+#3  Rooftop Lights - Indigo Parade
+    Score: 0.61
+    Why:
+      - mood match: happy (+7)
+      - energy 0.76 vs target 0.8 (sim 0.96)
+------------------------------------------------------------
+
+#4  Concrete Crown - Kid Meridian
+    Score: 0.28
+    Why:
+      - energy 0.78 vs target 0.8 (sim 0.98)
+------------------------------------------------------------
+
+#5  Calle Sol - Los Faroles
+    Score: 0.27
+    Why:
+      - energy 0.84 vs target 0.8 (sim 0.96)
+------------------------------------------------------------
 ```
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->

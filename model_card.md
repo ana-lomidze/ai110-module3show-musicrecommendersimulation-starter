@@ -2,8 +2,7 @@
 
 ## 1. Model Name  
 
-Give your model a short, descriptive name.  
-Example: **VibeFinder 1.0**  
+**VibeFinder 1.0**  
 
 ---
 
@@ -20,17 +19,35 @@ Prompts:
 ---
 
 ## 3. How the Model Works  
+## Scoring Approach
 
-Explain your scoring approach in simple language.  
+Think of the recommender like a friend who knows your taste and rates every song in the catalog from 0 to 100% on how well it fits you. Then they hand you the best few.
 
-Prompts:  
+### What the model knows about each song
 
-- What features of each song are used (genre, energy, mood, etc.)  
-- What user preferences are considered  
-- How does the model turn those into a score  
-- What changes did you make from the starter logic  
+Each song has a genre (like lofi or pop), a mood (chill, happy, intense) and an artist. It also has a few numbers that describe how the song feels: energy, how acoustic it sounds, how upbeat it is (valence), how danceable it is, and its tempo.
 
-Avoid code here. Pretend you are explaining the idea to a friend who does not program.
+### What the model knows about you
+
+You can list favorite genres, moods and artists. You can also say how much energy you want and how acoustic you like your music. Valence, danceability and tempo are optional. If you don't say anything about one of these, the model ignores it and doesn't count it against a song.
+
+### How it turns that into a score
+
+The model checks each thing you care about, one at a time, and gives the song a mark from 0 to 1.
+
+- **Genre, mood and artist** are a yes or no. If the song's genre is on your list, it gets full marks, and if not, zero.
+- **The numbers** reward being *close* to what you asked for. If you want medium energy, a song with slightly lower or slightly higher energy still scores well, and one that is far off scores poorly. More isn't automatically better.
+
+Not every feature matters equally. Genre counts the most, then mood, then energy, then artist, then acousticness, and the rest count a little. The final score is an average of all those marks, with the more important ones counting for more.
+
+### How songs are ranked
+
+The model sorts the songs from best to worst score. If two songs tie, the one whose energy is closer to your target wins. It shows you the top few, each with a short note on why it was picked.
+
+### What I changed from the starter
+
+The starter only knew a single favorite genre, a single favorite mood, a target energy and a yes/no "likes acoustic." I replaced that with lists of favorites, a target for how acoustic you want things, and an optional favorite-artist list. The starter code also did nothing yet. I built the part that reads the song catalog, the scoring, the ranking and the plain-English explanations. The output now shows each song's score and the reasons it matched.
+
 
 ---
 
