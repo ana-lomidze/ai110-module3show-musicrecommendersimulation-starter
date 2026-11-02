@@ -192,6 +192,145 @@ You can add more tests in `tests/test_recommender.py`.
 ------------------------------------------------------------
 ```
 
+
+### Other User Prefrence Outputs
+
+```
+============================================================
+ TOP 5 RECOMMENDATIONS
+ Profile: genres=lofi, jazz | moods=chill, relaxed | energy=0.40
+============================================================
+
+#1  Midnight Coding - LoRoom
+    Score: 0.98
+    Why:
+      - genre match: lofi (+8)
+      - mood match: chill (+7)
+      - energy 0.42 vs target 0.4 (sim 0.98)
+      - artist match: LoRoom (+5)
+      - acousticness 0.71 vs target 0.8 (sim 0.91)
+------------------------------------------------------------
+
+#2  Coffee Shop Stories - Slow Stereo
+    Score: 0.82
+    Why:
+      - genre match: jazz (+8)
+      - mood match: relaxed (+7)
+      - energy 0.37 vs target 0.4 (sim 0.97)
+      - acousticness 0.89 vs target 0.8 (sim 0.91)
+------------------------------------------------------------
+
+#3  Library Rain - Paper Lanterns
+    Score: 0.82
+    Why:
+      - genre match: lofi (+8)
+      - mood match: chill (+7)
+      - energy 0.35 vs target 0.4 (sim 0.95)
+      - acousticness 0.86 vs target 0.8 (sim 0.94)
+------------------------------------------------------------
+
+#4  Focus Flow - LoRoom
+    Score: 0.76
+    Why:
+      - genre match: lofi (+8)
+      - energy 0.4 vs target 0.4 (sim 1.00)
+      - artist match: LoRoom (+5)
+      - acousticness 0.78 vs target 0.8 (sim 0.98)
+------------------------------------------------------------
+
+#5  Spacewalk Thoughts - Orbit Bloom
+    Score: 0.53
+    Why:
+      - mood match: chill (+7)
+      - energy 0.28 vs target 0.4 (sim 0.88)
+      - acousticness 0.92 vs target 0.8 (sim 0.88)
+------------------------------------------------------------
+============================================================
+ TOP 5 RECOMMENDATIONS
+ Profile: genres=rock, metal | moods=intense | energy=1.00
+============================================================
+
+#1  Storm Runner - Voltline
+    Score: 0.98
+    Why:
+      - genre match: rock (+8)
+      - mood match: intense (+7)
+      - energy 0.91 vs target 1.0 (sim 0.91)
+      - artist match: Voltline (+5)
+------------------------------------------------------------
+
+#2  Ironclad Fury - Black Ember
+    Score: 0.53
+    Why:
+      - genre match: metal (+8)
+      - energy 0.97 vs target 1.0 (sim 0.97)
+------------------------------------------------------------
+
+#3  Gym Hero - Max Pulse
+    Score: 0.48
+    Why:
+      - mood match: intense (+7)
+      - energy 0.93 vs target 1.0 (sim 0.93)
+------------------------------------------------------------
+
+#4  Strobe Cathedral - Pulse Theory
+    Score: 0.22
+    Why:
+      - energy 0.95 vs target 1.0 (sim 0.95)
+------------------------------------------------------------
+
+#5  Parking Lot Anthem - Rusty Halo
+    Score: 0.22
+    Why:
+      - energy 0.94 vs target 1.0 (sim 0.94)
+------------------------------------------------------------
+============================================================
+ TOP 5 RECOMMENDATIONS
+ Profile: genres=classical | moods=melancholy | energy=0.20
+============================================================
+
+#1  Nocturne for Rain - Elena Voss
+    Score: 0.83
+    Why:
+      - genre match: classical (+8)
+      - mood match: melancholy (+7)
+      - energy 0.18 vs target 0.2 (sim 0.98)
+      - acousticness 0.97 vs target 0.99 (sim 0.98)
+------------------------------------------------------------
+
+#2  Morning Sonata - Clara Whitfield
+    Score: 0.71
+    Why:
+      - genre match: classical (+8)
+      - energy 0.45 vs target 0.2 (sim 0.75)
+      - artist match: Clara Whitfield (+5)
+      - acousticness 0.96 vs target 0.99 (sim 0.97)
+------------------------------------------------------------
+
+#3  Spacewalk Thoughts - Orbit Bloom
+    Score: 0.31
+    Why:
+      - energy 0.28 vs target 0.2 (sim 0.92)
+      - acousticness 0.92 vs target 0.99 (sim 0.93)
+------------------------------------------------------------
+
+#4  Willow Letters - Juniper & Moth
+    Score: 0.31
+    Why:
+      - energy 0.3 vs target 0.2 (sim 0.90)
+      - acousticness 0.93 vs target 0.99 (sim 0.94)
+------------------------------------------------------------
+
+#5  Library Rain - Paper Lanterns
+    Score: 0.29
+    Why:
+      - energy 0.35 vs target 0.2 (sim 0.85)
+      - acousticness 0.86 vs target 0.99 (sim 0.87)
+------------------------------------------------------------
+
+```
+
+
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or demo video link here -->
 
 ---

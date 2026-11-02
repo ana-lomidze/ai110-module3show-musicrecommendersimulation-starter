@@ -78,29 +78,53 @@ Prompts:
 
 ## 6. Limitations and Bias 
 
-Where the system struggles or behaves unfairly. 
 
-Prompts:  
+Based on our experiments with the 22-song catalog:
 
-- Features it does not consider  
-- Genres or moods that are underrepresented  
-- Cases where the system overfits to one preference  
-- Ways the scoring might unintentionally favor some users  
+- **Filter bubble**: Genre, mood and artist make up about 55% of the score (20 of 36 points), so users mostly get back the labels they already named, with little cross-genre discovery.
+- **Exact match penalty**: Genre, mood and artist are scored 1 or 0, so near-misses get nothing. "Wistful" earns no credit for a "melancholy" fan, and "Willow Letters" scored only 0.30 for the classics user despite a very similar sound.
+- **Thin catalog**: 18 genres and 18 moods across 22 songs means most genres have a single song. Users who like reggae, latin or country get one on-genre result and then loosely related filler.
+- **Lofi and classical advantage**: Genres with several songs (lofi has 3, classical and pop have 2 each) give those users fuller, better-matched lists than users of one-song genres.
+- **Energy overreach**: Energy is both weighted at 6 and the tiebreaker, so high-energy songs with no genre or mood match, like EDM and punk, filled the bottom of the rock user's top 5.
+- **Single target per feature**: Each numeric preference is one value, so users who like both calm and intense music get averaged into the middle.
+- **No diversity**: Pure score ranking let LoRoom take two of the top spots for the chill user.
 
 ---
 
 ## 7. Evaluation  
 
-How you checked whether the recommender behaved as expected. 
+#### Profiles used for testing:
+```
+user_prefs_chill = {
+    "favorite_genres": ["lofi", "jazz"],
+    "favorite_moods": ["chill", "relaxed"],
+    "target_energy": 0.40,
+    "favorite_artists": ["LoRoom"],
+    "target_acousticness": 0.80,
+}
 
-Prompts:  
+user_prefs_rock = {
+    "favorite_genres": ["rock", "metal"],
+    "favorite_moods": ["intense"],
+    "target_energy": 1.0,
+    "favorite_artists": ["Voltline"],
+}
 
-- Which user profiles you tested  
-- What you looked for in the recommendations  
-- What surprised you  
-- Any simple tests or comparisons you ran  
+user_prefs_classic = {
+    "favorite_genres": ["classical"],
+    "favorite_moods": ["melancholy"],
+    "target_energy": 0.20,
+    "favorite_artists": ["Clara Whitfield"],
+    "target_acousticness": 0.99,
+}
+```
 
-No need for numeric metrics unless you created some.
+The chill user was my first test. This user was created while implementing the logic behind the recommendations. It was added to the code during the testing phase to see if the results were as expected.
+
+With the rock user, I wanted to see how much the genres would effect the recommendation.
+
+When looking through the recommendations for the classics user, I wanted to see how much of an effect would favorite artist have. I was really happy with the result becuase it didn't prioritize the favorite artist. I took this mainly from my own experience with song recommendation platforms. I don't like it when I get the same artists recommended over and over. I like having my favorite artist as a suggestion for the system to take as a "here's the vibes I like."
+
 
 ---
 

@@ -44,14 +44,47 @@ def print_recommendations(user_prefs: Dict, recommendations: List[Tuple[Dict, fl
 def main() -> None:
     songs = load_songs("data/songs.csv")
 
-    user_prefs = {
+    user_prefs_happy = {
         "favorite_genres": ["pop"],
         "favorite_moods": ["happy"],
         "target_energy": 0.8,
     }
 
-    recommendations = recommend_songs(user_prefs, songs, k=5)
-    print_recommendations(user_prefs, recommendations)
+    user_prefs_chill = {
+        "favorite_genres": ["lofi", "jazz"],
+        "favorite_moods": ["chill", "relaxed"],
+        "target_energy": 0.40,
+        "favorite_artists": ["LoRoom"],
+        "target_acousticness": 0.80,
+    }
+
+    user_prefs_rock = {
+        "favorite_genres": ["rock", "metal"],
+        "favorite_moods": ["intense"],
+        "target_energy": 1.0,
+        "favorite_artists": ["Voltline"],
+    }
+
+    user_prefs_classic = {
+        "favorite_genres": ["classical"],
+        "favorite_moods": ["melancholy"],
+        "target_energy": 0.20,
+        "favorite_artists": ["Clara Whitfield"],
+        "target_acousticness": 0.99,
+    }
+
+    # recommendations = recommend_songs(user_prefs, songs, k=5)
+    # print_recommendations(user_prefs, recommendations)
+
+    recommendations = recommend_songs(user_prefs_chill, songs, k=5)
+    print_recommendations(user_prefs_chill, recommendations)
+
+
+    recommendations = recommend_songs(user_prefs_rock, songs, k=5)
+    print_recommendations(user_prefs_rock, recommendations)
+
+    recommendations = recommend_songs(user_prefs_classic, songs, k=5)
+    print_recommendations(user_prefs_classic, recommendations)
 
 
 if __name__ == "__main__":
