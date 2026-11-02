@@ -57,6 +57,7 @@ The starter only knew a single favorite genre, a single favorite mood, a target 
 ## 4. Data  
 
 There are 22 total songs - originally 10; I added 12 songs - in the catalog with 18 distinct genres and moods:
+
 **Genres**
 - lofi (3)
 - pop (2)
