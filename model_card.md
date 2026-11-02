@@ -8,13 +8,16 @@
 
 ## 2. Intended Use  
 
-Describe what your recommender is designed to do and who it is for. 
+This recommender suggests the top 5 songs from a small 22-song catalog, based on a user's stated preferences. Each song gets a score from 0 to 1 and a short explanation of why it was picked (for example, "genre match: classical (+8)"). Users can give favorite genres, moods and artists, plus target values for energy, acousticness, valence, danceability and tempo.
 
-Prompts:  
+**Assumptions about the user**
+- The user knows their taste and can state it up front. There is no listening history or feedback.
+- Their taste can be described as a short list of liked labels plus one target value per numeric feature.
+- Every preference they give matters. Features they leave out are ignored, not treated as neutral.
 
-- What kind of recommendations does it generate  
-- What assumptions does it make about the user  
-- Is this for real users or classroom exploration  
+**Intended use**
+This is for classroom exploration only. It is not meant for real users or a real product.
+ 
 
 ---
 
@@ -53,26 +56,28 @@ The starter only knew a single favorite genre, a single favorite mood, a target 
 
 ## 4. Data  
 
-Describe the dataset the model uses.  
+There are 22 total songs - originally 10; I added 12 songs - in the catalog with 18 distinct genres and moods:
+**Genres**
+- lofi (3)
+- pop (2)
+- classical (2)
+- rock, ambient, jazz, synthwave, indie pop, hip hop, country, reggae, metal, r&b, edm, folk, shoegaze, latin and punk
 
-Prompts:  
+**Moods**
+- chill (3)
+- happy (2)
+- intense(2)
+- relaxed, moody, focused, confident, melancholy, nostalgic, carefree, angry, romantic, euphoric, wistful, uplifting, dreamy, festive and rebellious
 
-- How many songs are in the catalog  
-- What genres or moods are represented  
-- Did you add or remove data  
-- Are there parts of musical taste missing in the dataset  
+I think the current catalog has a fairly wide range of songs for such a small dataset. However, adding more songs to the catalog would be very helpful. It's hard to gauge how good a recommendation system is when there aren't a lot of the same artist, genre, mood, etc.
 
 ---
 
 ## 5. Strengths  
 
-Where does your system seem to work well  
-
-Prompts:  
-
-- User types for which it gives reasonable results  
-- Any patterns you think your scoring captures correctly  
-- Cases where the recommendations matched your intuition  
+- **Works well for users with clear, consistent tastes**: The chill (lofi/jazz) and rock profiles got top results that matched on genre, mood, energy and artist.
+- **Artist acts as a suggestion, not an override**: Artist is weighted below genre and mood. When I temporarily raised it above both for testing, the classics user's #1 became an upbeat song they hadn't asked for, so I kept it at 5.
+- **Transparent**: Each recommendation lists exactly which features contributed, which made it easy to see why results changed.
 
 ---
 
@@ -130,23 +135,14 @@ When looking through the recommendations for the classics user, I wanted to see 
 
 ## 8. Future Work  
 
-Ideas for how you would improve the model next.  
-
-Prompts:  
-
-- Additional features or preferences  
-- Better ways to explain recommendations  
-- Improving diversity among the top results  
-- Handling more complex user tastes  
+- Adding a UI to prompt the user to fill in their prefences.
+- Letting a user add songs they like. This would give a simulated 'listening history.' This can also give the users the opportunity to be more direct with the type of recommendation they want to get from the model.
+- Add more songs to the catalog. Having 22 songs is very limiting.
 
 ---
 
 ## 9. Personal Reflection  
 
-A few sentences about your experience.  
+I was assigned a very similar project in high school and funnily enough, my approach back then wasn't too far off from what I ended up doing here.
 
-Prompts:  
-
-- What you learned about recommender systems  
-- Something unexpected or interesting you discovered  
-- How this changed the way you think about music recommendation apps  
+I also really enjoyed research exisiting recommendation systsms and seeing what happens "under the hood" for apps I use daily. The biggest thing I learned is how much small choices matter: raising the artist weight from 5 to 8 only changed one score by 0.01, but it flipped the top pick for the classics user to a song that didn't fit the mood they asked for. I also didn't expect a tiny 22-song catalog to produce such clear filter bubbles. It makes me wonder how much of what feels like an app "knowing my taste" is really it reinforcing what I already listen to.

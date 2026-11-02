@@ -2,16 +2,7 @@
 
 ## Project Summary
 
-In this project you will build and explain a small music recommender system.
-
-Your goal is to:
-
-- Represent songs and a user "taste profile" as data
-- Design a scoring rule that turns that data into recommendations
-- Evaluate what your system gets right and wrong
-- Reflect on how this mirrors real world AI recommenders
-
-Replace this paragraph with your own summary of what your version does.
+This project is a content-based music recommender that suggests songs to a user by comparing song attributes (genre, mood, artist, energy, acousticness and more) against a user "taste profile," instead of using other listeners' behavior. Each song gets a weighted score from 0 to 1 and a short explanation of why it was picked.
 
 ---
 
@@ -337,25 +328,32 @@ You can add more tests in `tests/test_recommender.py`.
 
 ## Experiments You Tried
 
-Use this section to document the experiments you ran. For example:
+**Different types of users**
 
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+I ran three profiles against the 22-song catalog:
+
+- **Chill (lofi/jazz, chill/relaxed, energy 0.40, artist LoRoom)**: The top result was "Midnight Coding" (0.98), matching on genre, mood, energy and artist. The rest of the list was sensible low-energy, acoustic songs.
+- **Rock (rock/metal, intense, energy 1.0, artist Voltline)**: "Storm Runner" scored 0.98 and the next result dropped to 0.53. Ranks #4 and #5 (EDM and punk) scored 0.22 on energy similarity alone.
+- **Classical (classical, melancholy, energy 0.20, acousticness 0.99, artist Clara Whitfield)**: "Nocturne for Rain" by Elena Voss ranked #1 (0.83) over the favorite-artist song "Morning Sonata" (0.71), because Morning Sonata is uplifting and higher-energy.
+
+**Raising the artist weight**
+
+I temporarily changed the weights from genre 8, mood 7, artist 5 to genre 7, mood 6, artist 8, then reverted them.
+
+- **Classical**: The top two swapped. "Morning Sonata" took #1 (0.75) over "Nocturne for Rain" (0.74), so a 0.01 gap put an upbeat song first for a user who asked for melancholy.
+- **Chill**: "Focus Flow" (LoRoom) moved from #4 to #2 (0.80), ahead of two songs that matched the user's genre and mood but not the artist.
+- **Rock**: The order stayed the same. The #1 song already matched the artist, and it rose to 0.98.
+
+I kept the original weights because the higher artist weight let a name match override the user's stated mood. It also gave an advantage to artists with several songs in the catalog.
 
 ---
 
 ## Limitations and Risks
 
-Summarize some limitations of your recommender.
-
-Examples:
-
-- It only works on a tiny catalog
-- It does not understand lyrics or language
-- It might over favor one genre or mood
-
-You will go deeper on this in your model card.
+- **Tiny catalog**: With 22 songs, 15 of the 18 genres and 15 of the 18 moods have only one song, so users of those genres get one on-genre result and then filler.
+- **Exact-match labels**: Genre, mood and artist score 1 or 0, so near-misses like "wistful" vs. "melancholy" get no credit. These three features are also about 55% of the score, which creates a filter bubble.
+- **Limited features**: It doesn't use lyrics, language, popularity or listening history, and each numeric preference is a single target value, so users with varied taste get averaged into the middle.
+- **Energy overreach**: Energy is both weighted at 6 and the tiebreaker, so high-energy songs with no genre or mood match can still fill the bottom of a top 5.
 
 ---
 
@@ -365,10 +363,5 @@ Read and complete `model_card.md`:
 
 [**Model Card**](model_card.md)
 
-Write 1 to 2 paragraphs here about what you learned:
-
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
-
-
+Building this showed me that a recommender is really a set of choices about what counts. Each song and user is turned into a few numbers and labels, and a weighted score decides the ranking. Small choices mattered a lot: raising the artist weight from 5 to 8 changed one score by only 0.01, but it flipped the classics user's top pick to an upbeat song they hadn't asked for. The explanations I attached to each result made this easy to see, since I could tell exactly which feature pushed a song up or down.
 
